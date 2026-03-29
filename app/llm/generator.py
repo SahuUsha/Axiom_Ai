@@ -46,6 +46,10 @@ async def _call_llm(prompt: str) -> str:
         elif provider == "mcp":
             # MCP (Model Context Protocol)
             llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model_name="gpt-4", temperature=0.0)
+        elif provider == "openai":
+            if not getattr(settings, "OPENAI_API_KEY", None):
+                raise SQLGenerationError("OPENAI_API_KEY is missing for OpenAI provider")
+            llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model_name=getattr(settings, "OPENAI_MODEL", "gpt-4o"), temperature=0.0)
         else:
             raise SQLGenerationError(f"Unsupported LLM Provider: {provider}")
 

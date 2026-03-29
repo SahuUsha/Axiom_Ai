@@ -36,11 +36,32 @@ SQL Query Agent is a FastAPI-based backend application that translates Natural L
 
 ## Configuration
 
-Copy the example environment file and update the configuration variables (the current configuration uses **Groq** for LLM and **PostgreSQL** for the database):
+Copy the example environment file and update the configuration variables:
 
 ```bash
 cp .env.example .env
 ```
+
+### Database Setup
+
+This microservice requires schema context to generate SQL queries. You have two options:
+
+**Option 1: Provide schema_context in API requests (Recommended for microservices)**
+```json
+{
+  "task_description": "What is the total revenue by product category?",
+  "schema_context": "CREATE TABLE sales (product_id INT, product_name VARCHAR, category VARCHAR, quantity INT, price DECIMAL, revenue DECIMAL, sale_date DATE, region VARCHAR);"
+}
+```
+
+**Option 2: Use DuckDB with local data files (For testing/development)**
+- Set `DB_DIALECT=duckdb` in `.env`
+- Place CSV or Parquet files in the directory specified by `DUCKDB_DATA_PATH` (default: `./data`)
+- Files are automatically loaded as tables (e.g., `sales.csv` → table `sales`)
+
+**Option 3: Connect to external database (PostgreSQL, MySQL, etc.)**
+- Set `DB_DIALECT` and `DATABASE_URL` in `.env`
+- The agent will introspect the database schema automatically
 
 The current `.env` configuration uses:
 - **LLM PROVIDER:** Groq (`llama-3.3-70b-versatile`)

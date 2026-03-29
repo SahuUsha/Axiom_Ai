@@ -4,8 +4,10 @@ from typing import Optional, Literal
 
 class Settings(BaseSettings):
     LLM_PROVIDER: Literal["ollama", "openai", "anthropic", "groq", "grok"] = "ollama"
-    GROQ_API_KEY: Optional[str] = "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"
+    GROQ_API_KEY: Optional[str] = ""
     XAI_API_KEY: Optional[str] = None
+    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_MODEL: str = "gpt-4o"
     GROQ_MODEL: str = "llama-3.1-8b-instant"
     OLLAMA_MODEL: str = ""
     OLLAMA_BASE_URL: str = ""
