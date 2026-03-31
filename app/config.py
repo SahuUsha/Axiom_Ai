@@ -3,7 +3,7 @@ from typing import Optional, Literal
 
 
 class Settings(BaseSettings):
-    LLM_PROVIDER: Literal["ollama", "openai", "anthropic", "groq", "grok"] = "ollama"
+    LLM_PROVIDER: Literal["ollama", "openai", "anthropic", "groq", "grok", "azure_openai"] = "openai"
     GROQ_API_KEY: Optional[str] = ""
     XAI_API_KEY: Optional[str] = None
     OPENAI_API_KEY: Optional[str] = None
@@ -11,6 +11,12 @@ class Settings(BaseSettings):
     GROQ_MODEL: str = "llama-3.1-8b-instant"
     OLLAMA_MODEL: str = ""
     OLLAMA_BASE_URL: str = ""
+    
+    # Azure OpenAI
+    AZURE_OPENAI_API_KEY: Optional[str] = None
+    AZURE_OPENAI_ENDPOINT: str = ""
+    AZURE_OPENAI_DEPLOYMENT_NAME: str = ""
+    AZURE_OPENAI_API_VERSION: str = "2024-02-15-preview"
     
     DB_DIALECT: str = "duckdb"
     DATABASE_URL: Optional[str] = None
